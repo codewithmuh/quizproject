@@ -11,6 +11,23 @@ class CatAdmin(admin.ModelAdmin):
         'name',
     ]
 
+class AnswerInlineModel(admin.TabularInline):
+    model = models.Answer 
+    fields = [
+        'answer_text',
+        'is_right',
+    ]
+
+# This class is used to create a form for adding and editing answers in the admin sit
+class QuestionInlineModel(admin.TabularInline):
+    model = models.Questions 
+    fields = [
+        'title',
+        'technique',
+        'difficulty',
+        'is_active',
+    ]
+
 
 @admin.register(models.Quizzes)
 
@@ -19,6 +36,8 @@ class QuizAdmin(admin.ModelAdmin):
         'id',
         'title',
     ]
+
+    inlines = [ QuestionInlineModel,]
     
 # This class is used to create a form for adding and editing answers in the admin sit
 class AnswerInlineModel(admin.TabularInline):
@@ -37,10 +56,17 @@ class QuestionAdmin(admin.ModelAdmin):
     fields = [
         'title',
         'quiz',
+        'technique',
+        'difficulty',
+        'is_active',
+       
     ]
     list_display = [
         'title',
         'quiz',
+        'technique',
+        'difficulty',
+        'is_active',
         'date_created',
     ]
     inlines = [ AnswerInlineModel, ]
